@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class ShapeSpawner : MonoBehaviour
 {
     public GameObject cubePrefab;
     public GameObject spherePrefab;
