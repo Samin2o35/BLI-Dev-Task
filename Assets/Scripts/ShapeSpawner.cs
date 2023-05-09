@@ -17,49 +17,59 @@ public class ShapeSpawner : MonoBehaviour
 
     void Update()
     {
-        SpawnSelectedShape();
-    }
-
-    public void SpawnSelectedShape()
-    {
         //mouse left click
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             //check if cube slected
             if (isPlacingCube && !isPlacingSphere)
             {
-                //ray cast for placing at mouse position
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    //spawn cube at mouse position with no rotation
-                    Instantiate(cubePrefab, hit.point, Quaternion.identity);
-                }
+                SpawnCube();
             }
-
             //check if sphere slected
             if (isPlacingSphere && !isPlacingCube)
             {
-                //ray cast for placing at mouse position
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    //spawn sphere at mouse position with no rotation
-                    Instantiate(spherePrefab, hit.point, Quaternion.identity);
-                }
+                SpawnSphere();
             }
         }
     }
-    
+
+    public void SpawnCube()
+    {
+        //ray cast for placing at mouse position
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if(hit.collider.tag == "Floor")
+            {
+                //spawn cube at mouse position with no rotation
+                Instantiate(cubePrefab, hit.point, Quaternion.identity);
+            }
+        }
+    }
+
+    public void SpawnSphere()
+    {
+        //ray cast for placing at mouse position
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            if(hit.collider.tag == "Floor")
+            {
+                //spawn sphere at mouse position with no rotation
+                Instantiate(spherePrefab, hit.point, Quaternion.identity);
+            }
+        }
+    }
+   
     public void SelectCubePrefab()
     {
-        //indicate that we are now placing a cube
-        isPlacingCube = true;
+        //button press for placing a cube
+        isPlacingCube = !isPlacingCube;
     }
 
     public void SelectSpherePrefab()
     {
-        //indicate that we are now placing a sphere
-        isPlacingSphere = true;
+        //button press for placing a sphere
+        isPlacingSphere = !isPlacingSphere;
     }
 }
